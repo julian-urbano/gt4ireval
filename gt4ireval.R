@@ -200,3 +200,9 @@ print.gt2data <- function(x) {
 	for(i in 1:length(x$call$Phi))
 		cat(sep=" ", sprintf("%*.5g",12,x$call$Phi[i]), sprintf("%*.5g",11,x$rsens[i]), sprintf("%*.5g",11,x$rmse[i]), "\n")
 }
+
+cat("GT4IREval 1.0 Copyright (C) 2013 Julian Urbano <urbano.julian@gmail.com>\n")
+cat("This program comes with ABSOLUTELY NO WARRANTY.\n")
+cat("This is free software, and you are welcome to redistribute it\n")
+cat("under the terms of the GNU General Public License version 3.\n")
+cat("-------------------------------------------\nUse functions g.study , d.study and gt2data\n")
