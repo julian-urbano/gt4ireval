@@ -3,11 +3,11 @@
 \usepackage{amsmath}
 \usepackage[colorlinks=true,allcolors=blue]{hyperref}
 \usepackage{url}
-\usepackage[top=1in, bottom=1in, left=1.5in, right=1in,a4paper]{geometry}
+\usepackage[top=.9in, bottom=.9in, left=1.4in, right=0.9in,a4paper]{geometry}
 
 
 \begin{document}
-\title{\textbf{GT4IReval: An R package to Measure the Reliability of an Information Retrieval\\Test Collection with Generalizability Theory}}
+\title{\textbf{GT4IReval: An R package to Measure the Reliability of an Information Retrieval\\Test Collection with Generalizability Theory\\{\Large Version 1.0}}}
 \author{Juli\'an Urbano\\University Carlos III of Madrid\\\texttt{urbano.julian@gmail.com}}
 \maketitle
 
@@ -17,10 +17,13 @@
 
 \section{Loading \texttt{GT4IReval} and Data}
 
-The \texttt{GT4IReval} package can be loaded into \texttt{R} simply by copy-pasting the code inside the \texttt{gt4ireval.R} file directly into the command prompt. Alternatively, it can be loaded using the \texttt{source} function.
-
+The \texttt{GT4IReval} package can be loaded into \texttt{R} simply by copy-pasting the code inside the \texttt{gt4ireval.R} file directly into the command prompt. Alternatively, it can be loaded using the \texttt{source} function with a local copy of the file:
 {\small\begin{verbatim}
 > source("path/to/file/gt4ireval.R")
+\end{verbatim}}
+\noindent or loading the latest version online from the repository\footnote{\url{https://github.com/julian-urbano/GT4IREval}}:
+{\small\begin{verbatim}
+> source("https://github.com/julian-urbano/GT4IREval/raw/master/gt4ireval.R")
 \end{verbatim}}
 
 \texttt{GT4IReval} needs initial evaluation data to run a G-study and the corresponding D-study. These data need to be in a standard \texttt{data.frame}, where columns correspond to systems and rows correspond to queries. For this manual, let us use data from the TREC-3 Ad Hoc track\footnote{For general information on how to read data in \texttt{R}, the reader is referred to the \textsl{R Data Import/Export} manual, accessible from \url{http://cran.r-project.org/manuals.html}.}.
@@ -335,7 +338,7 @@ Similarly, we can use the returned \texttt{gt2data} object in subsequent computa
 >  grid()
 \end{verbatim}}
 
-\bibliographystyle{acm}
+\bibliographystyle{plain}
 \bibliography{gt4ireval}
 
 \end{document}
