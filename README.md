@@ -3,7 +3,7 @@ GT4IREval
 
 An R package to measure the reliability of an Information Retrieval test collection with Generalizability Theory.
 
-For a full background please refer to *Julián Urbano, Mónica Marrero, and Diego Martín, "[On the Measurement of Test Collection Reliability](http://julian-urbano.info/wp-content/uploads/055-measurement-test-collection-reliability.pdf)", International ACM SIGIR Conference on Research and Development in Information Retrieval, 2013*.
+For a full background please refer to *Julián Urbano, Mónica Marrero and Diego Martín, "[On the Measurement of Test Collection Reliability](http://julian-urbano.info/wp-content/uploads/055-measurement-test-collection-reliability.pdf)", International ACM SIGIR Conference on Research and Development in Information Retrieval, 2013*.
 
 Usage
 -----
@@ -14,7 +14,7 @@ As a very simple example, you can load your data from a file such as ``adhoc3.tx
 
     > ah3 <- read.table("adhoc3.txt")
     > head(ah3)
-    sys1 sys2 sys3 sys4 sys5 sys6 sys7 ...
+        sys1   sys2   sys3   sys4   sys5   sys6   sys7 ...
     1 0.2830 0.5163 0.4810 0.5737 0.5184 0.4945 0.5013 ...
     2 0.0168 0.5442 0.3987 0.2964 0.6115 0.2354 0.1689 ...
 
