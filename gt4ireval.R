@@ -1,4 +1,4 @@
-## Copyright (C) 2013  Julián Urbano <urbano.julian@gmail.com>
+## Copyright (C) 2014  Julián Urbano <urbano.julian@gmail.com>
 ## 
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -201,7 +201,7 @@ print.gt2data <- function(x) {
 		cat(sep=" ", sprintf("%*.5g",12,x$call$Phi[i]), sprintf("%*.5g",11,x$rsens[i]), sprintf("%*.5g",11,x$rmse[i]), "\n")
 }
 
-cat("GT4IREval 1.1 Copyright (C) 2013 Julian Urbano <urbano.julian@gmail.com>\n")
+cat("GT4IREval 1.1 Copyright (C) 2014 Julian Urbano <urbano.julian@gmail.com>\n")
 cat("This program comes with ABSOLUTELY NO WARRANTY.\n")
 cat("This is free software, and you are welcome to redistribute it\n")
 cat("under the terms of the GNU General Public License version 3.\n")
