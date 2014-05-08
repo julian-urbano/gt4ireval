@@ -148,7 +148,7 @@ print.gstudy <- function(x) {
 print.dstudy <- function(x) {
 	cat("\nSummary of D-Study\n")
 	cat("\nCall:\n")
-	cat("    queries =", x$call$n.q, "\n")
+	cat("    queries =", x$call$queries, "\n")
 	cat("  stability =", x$call$stability, "\n")
 	cat("      alpha =", x$call$alpha, "\n")
 
@@ -166,8 +166,8 @@ print.dstudy <- function(x) {
 		cat("             -----------------------------------   -----------------------------------\n")  
 		cat("     Queries    Expected       Lower       Upper      Expected       Lower       Upper\n")
 		cat(" ----------- ----------- ----------- -----------   ----------- ----------- -----------\n")
-		for(i in 1:length(x$call$n.q))
-			cat("", sprintf("%*.5g",11,x$call$n.q[i]), sprintf("%*.5g",11,x$Erho2[i]), sprintf("%*.5g",11,x$Erho2.lwr[i]), sprintf("%*.5g",11,x$Erho2.upr[i]), " ", sprintf("%*.5g",11,x$Phi[i]), sprintf("%*.5g",11,x$Phi.lwr[i]), sprintf("%*.5g",11,x$Phi.upr[i]), "\n")
+		for(i in 1:length(x$call$queries))
+			cat("", sprintf("%*.5g",11,x$call$queries[i]), sprintf("%*.5g",11,x$Erho2[i]), sprintf("%*.5g",11,x$Erho2.lwr[i]), sprintf("%*.5g",11,x$Erho2.upr[i]), " ", sprintf("%*.5g",11,x$Phi[i]), sprintf("%*.5g",11,x$Phi.lwr[i]), sprintf("%*.5g",11,x$Phi.upr[i]), "\n")
 	}
 
 	# Number of queries
@@ -201,7 +201,7 @@ print.gt2data <- function(x) {
 		cat(sep=" ", sprintf("%*.5g",12,x$call$Phi[i]), sprintf("%*.5g",11,x$rsens[i]), sprintf("%*.5g",11,x$rmse[i]), "\n")
 }
 
-cat("GT4IREval 1.0 Copyright (C) 2013 Julian Urbano <urbano.julian@gmail.com>\n")
+cat("GT4IREval 1.1 Copyright (C) 2013 Julian Urbano <urbano.julian@gmail.com>\n")
 cat("This program comes with ABSOLUTELY NO WARRANTY.\n")
 cat("This is free software, and you are welcome to redistribute it\n")
 cat("under the terms of the GNU General Public License version 3.\n")
