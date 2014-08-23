@@ -12,7 +12,7 @@
 \maketitle
 
 \begin{abstract}
-\noindent\texttt{GT4IReval}\footnote{For the latest version of the package and this document, please visit \url{http://julian-urbano.info}.} is a package for the statistical software \texttt{R} to measure the reliability of an Information Retrieval test collection. It allows users to estimate reliability using Generalizability Theory and map those estimates onto well-known indicators such as Kendall $\tau$ correlation or sensitivity. For background information and details, the reader is referred to \cite{Urbano2013:measurement}.
+\noindent\texttt{GT4IReval}\footnote{For the latest version of the package and this document, please visit \url{http://julian-urbano.info}.} is a package for the statistical software \texttt{R} to measure the reliability of an Information Retrieval test collection. It allows users to estimate reliability using Generalizability Theory~\cite{Brennan2001:generalizability} and map those estimates onto well-known indicators such as Kendall $\tau$ correlation or sensitivity. For background information and details, the reader is referred to \cite{Urbano2013:measurement}.
 \end{abstract}
 
 \section{Loading \texttt{GT4IReval} and Data}
@@ -337,6 +337,9 @@ Similarly, we can use the returned \texttt{gt2data} object in subsequent computa
 >  lines(ah3.d$call$queries, ah3.i$tau)
 >  grid()
 \end{verbatim}}
+
+\section*{Acknowledgments}
+This work is supported by an A4U postdoctoral grant.
 
 \bibliographystyle{plain}
 \bibliography{gt4ireval}
