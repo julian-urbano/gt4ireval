@@ -1,0 +1,10 @@
++ Added simple unit tests from Brennan's book (Closes #2).
+* Fixed #1: g.study accepts both data.frame and matrix.
+
+GT4IREval 1.1, 08-May-2014
+============================
+* Fixed minor bug in print.dstudy showing wrong number of queries in call from g.study.
+
+GT4IREval 1.0, 09-Dec-2013
+============================
++ Initial release.
