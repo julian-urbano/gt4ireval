@@ -1,27 +1,30 @@
-## Copyright (C) 2014  Juli·n Urbano <urbano.julian@gmail.com>
-## 
+## Copyright (C) 2013-2015  Juli√°n Urbano <urbano.julian@gmail.com>
+##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
 ## the Free Software Foundation, either version 3 of the License, or
 ## (at your option) any later version.
-## 
+##
 ## This program is distributed in the hope that it will be useful,
 ## but WITHOUT ANY WARRANTY; without even the implied warranty of
 ## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ## GNU General Public License for more details.
-## 
+##
 ## You should have received a copy of the GNU General Public License
 ## along with this program.  If not, see http://www.gnu.org/licenses/.
 
 g.study <- function(data, drop = 0) {
+  if(!is.data.frame(data) & !is.matrix(data))
+    stop("Data must be a data.frame or matrix (columns for systems and rows for queries)")
+
 	# drop bottom results as indicated
-	t <- data[colMeans(data) >= quantile(colMeans(data), drop)]
+	t <- data[,colMeans(data) >= quantile(colMeans(data), drop)]
 
 	# sizes and means
-	n.s <- length(t)
-	means.s <- apply(t, 2, mean)
+	n.s <- ncol(t)
+	means.s <- colMeans(t)
 	n.q <- nrow(t)
-	means.q <- apply(t, 1, mean)
+	means.q <- rowMeans(t)
 	means.all <- mean(means.s)
 
 	# sums of squares and mean squares
@@ -60,9 +63,9 @@ g.study <- function(data, drop = 0) {
 
 d.study <- function(gdata, queries = gdata$n.q, stability = 0.95, alpha = 0.025) {
 	if(length(alpha) > 1 & length(queries) > 1)
-		stop("Only one of \"alpha\" and \"queries\" may have multiple values")
+		stop("Only one of 'alpha' and 'queries' may have multiple values")
 	if(length(alpha) > 1 & length(stability) > 1)
-		stop("Only one of \"alpha\" and \"stability\" may have multiple values")
+		stop("Only one of 'alpha' and 'stability' may have multiple values")
 
 	# Point estimates for the indicated n.q
 	Erho2_ <- gdata$var.s / (gdata$var.s + gdata$var.e / queries)
@@ -70,7 +73,7 @@ d.study <- function(gdata, queries = gdata$n.q, stability = 0.95, alpha = 0.025)
 
 	Phi_ <- gdata$var.s / (gdata$var.s + (gdata$var.q + gdata$var.e) / queries)
 	n.q_Phi <- ceiling((stability * (gdata$var.q + gdata$var.e)) / (gdata$var.s * (1 - stability)))
-	
+
 	# Interval estimates
 	df.s <- gdata$n.s - 1
 	df.q <- gdata$n.q - 1
@@ -89,16 +92,16 @@ d.study <- function(gdata, queries = gdata$n.q, stability = 0.95, alpha = 0.025)
 	Phi.lwr <- gdata$em.s^2 - qf(1-alpha, df.s, Inf) * gdata$em.s * gdata$em.e
 	Phi.lwr <- Phi.lwr + (qf(1-alpha, df.s, Inf) - qf(1-alpha, df.s, df.e)) *
 		qf(1-alpha, df.s, df.e) * gdata$em.e^2
-	Phi.lwr <- Phi.lwr / ( (gdata$n.s - 1) * qf(1-alpha, df.s, Inf,) * gdata$em.s * gdata$em.e + 
+	Phi.lwr <- Phi.lwr / ( (gdata$n.s - 1) * qf(1-alpha, df.s, Inf,) * gdata$em.s * gdata$em.e +
 		qf(1-alpha, df.s, df.q) * gdata$em.s * gdata$em.q )
 	Phi.lwr <- gdata$n.s * Phi.lwr / (gdata$n.s * Phi.lwr + gdata$n.q)
 	n.q_Phi.lwr <- ceiling(stability * (1 - Phi.lwr) / (Phi.lwr * (1 - stability)))
 	Phi.lwr <- queries * Phi.lwr / (1 + (queries - 1) * Phi.lwr)
-	
+
 	Phi.upr <- gdata$em.s^2 - qf(alpha, df.s, Inf) * gdata$em.s * gdata$em.e
 	Phi.upr <- Phi.upr + (qf(alpha, df.s, Inf) - qf(alpha, df.s, df.e)) *
 		qf(alpha, df.s, df.e) * gdata$em.e^2
-	Phi.upr <- Phi.upr / ( (gdata$n.s - 1) * qf(alpha, df.s, Inf,) * gdata$em.s * gdata$em.e + 
+	Phi.upr <- Phi.upr / ( (gdata$n.s - 1) * qf(alpha, df.s, Inf,) * gdata$em.s * gdata$em.e +
 		qf(alpha, df.s, df.q) * gdata$em.s * gdata$em.q )
 	Phi.upr <- gdata$n.s * Phi.upr / (gdata$n.s * Phi.upr + gdata$n.q)
 	n.q_Phi.upr <- ceiling(stability * (1 - Phi.upr) / (Phi.upr * (1 - stability)))
@@ -109,7 +112,7 @@ d.study <- function(gdata, queries = gdata$n.q, stability = 0.95, alpha = 0.025)
 		n.q_Erho2 = n.q_Erho2, n.q_Phi = n.q_Phi,
 		Erho2.lwr = Erho2.lwr, Erho2.upr = Erho2.upr,
 		Phi.lwr = Phi.lwr, Phi.upr = Phi.upr,
-		n.q_Erho2.lwr = n.q_Erho2.lwr, n.q_Erho2.upr = n.q_Erho2.upr, 
+		n.q_Erho2.lwr = n.q_Erho2.lwr, n.q_Erho2.upr = n.q_Erho2.upr,
 		n.q_Phi.lwr = n.q_Phi.lwr, n.q_Phi.upr = n.q_Phi.upr,
 		call = list(gstudy = gdata,
 			queries = queries, stability = stability, alpha = alpha
@@ -153,17 +156,17 @@ print.dstudy <- function(x) {
 	cat("      alpha =", x$call$alpha, "\n")
 
 	# Stability
-	cat("\nStability:\n")	
+	cat("\nStability:\n")
 	if(length(x$call$alpha) > 1){
 		cat("                                           Erho2                                   Phi\n")
-		cat("             -----------------------------------   -----------------------------------\n")  
+		cat("             -----------------------------------   -----------------------------------\n")
 		cat("       Alpha    Expected       Lower       Upper      Expected       Lower       Upper\n")
 		cat(" ----------- ----------- ----------- -----------   ----------- ----------- -----------\n")
 		for(i in 1:length(x$call$alpha))
 			cat("", sprintf("%*.5g",11,x$call$alpha[i]), sprintf("%*.5g",11,x$Erho2[1]), sprintf("%*.5g",11,x$Erho2.lwr[i]), sprintf("%*.5g",11,x$Erho2.upr[i]), " ", sprintf("%*.5g",11,x$Phi[1]), sprintf("%*.5g",11,x$Phi.lwr[i]), sprintf("%*.5g",11,x$Phi.upr[i]), "\n")
 	}else{
 		cat("                                           Erho2                                   Phi\n")
-		cat("             -----------------------------------   -----------------------------------\n")  
+		cat("             -----------------------------------   -----------------------------------\n")
 		cat("     Queries    Expected       Lower       Upper      Expected       Lower       Upper\n")
 		cat(" ----------- ----------- ----------- -----------   ----------- ----------- -----------\n")
 		for(i in 1:length(x$call$queries))
@@ -174,14 +177,14 @@ print.dstudy <- function(x) {
 	cat("\nRequired number of queries:\n")
 	if(length(x$call$alpha) > 1){
 		cat("                                           Erho2                                   Phi\n")
-		cat("             -----------------------------------   -----------------------------------\n")  
+		cat("             -----------------------------------   -----------------------------------\n")
 		cat("       Alpha    Expected       Lower       Upper      Expected       Lower       Upper\n")
 		cat(" ----------- ----------- ----------- -----------   ----------- ----------- -----------\n")
 		for(i in 1:length(x$call$alpha))
 			cat("", sprintf("%*.5g",11,x$call$alpha[i]), sprintf("%*.5g",11,x$n.q_Erho2[1]), sprintf("%*.5g",11,x$n.q_Erho2.upr[i]), sprintf("%*.5g",11,x$n.q_Erho2.lwr[i]), " ", sprintf("%*.5g",11,x$n.q_Phi[1]), sprintf("%*.5g",11,x$n.q_Phi.upr[i]), sprintf("%*.5g",11,x$n.q_Phi.lwr[i]), "\n")
 	}else{
 		cat("                                           Erho2                                   Phi\n")
-		cat("             -----------------------------------   -----------------------------------\n")  
+		cat("             -----------------------------------   -----------------------------------\n")
 		cat("   Stability    Expected       Lower       Upper      Expected       Lower       Upper\n")
 		cat(" ----------- ----------- ----------- -----------   ----------- ----------- -----------\n")
 		for(i in 1:length(x$call$stability))
@@ -201,7 +204,7 @@ print.gt2data <- function(x) {
 		cat(sep=" ", sprintf("%*.5g",12,x$call$Phi[i]), sprintf("%*.5g",11,x$rsens[i]), sprintf("%*.5g",11,x$rmse[i]), "\n")
 }
 
-cat("GT4IREval 1.1 Copyright (C) 2014 Julian Urbano <urbano.julian@gmail.com>\n")
+cat("GT4IREval 1.1 Copyright (C) 2013-2015 Julian Urbano <urbano.julian@gmail.com>\n")
 cat("This program comes with ABSOLUTELY NO WARRANTY.\n")
 cat("This is free software, and you are welcome to redistribute it\n")
 cat("under the terms of the GNU General Public License version 3.\n")
