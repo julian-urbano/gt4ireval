@@ -31,7 +31,7 @@
 #' g <- gstudy(synthetic4)
 #'
 #' # same, but drop the 20% worst systems
-#' g20 <- gstudy(synthetic, drop = 0.2)
+#' g20 <- gstudy(synthetic4, drop = 0.2)
 #' @export
 gstudy <- function(data, drop = 0) {
   if(drop < 0 || drop >= 1)

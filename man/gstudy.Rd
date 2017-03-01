@@ -34,7 +34,7 @@ be used to run a D-study with \code{\link{dstudy}}.
 g <- gstudy(synthetic4)
 
 # same, but drop the 20\% worst systems
-g20 <- gstudy(synthetic, drop = 0.2)
+g20 <- gstudy(synthetic4, drop = 0.2)
 }
 \references{
 R.L. Brennan (2001). Generalizability Theory. Springer.
