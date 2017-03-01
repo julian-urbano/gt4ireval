@@ -1,8 +1,8 @@
 #' D-study (Decision)
 #'
 #' \code{dstudy} runs a D-study from the results of a \code{\link{gstudy}} and computes, for a
-#' certain number of queries, the expected generalizability coefficient (Erho2) and index of
-#' dependability (Phi), possibly with confidence intervals. Alternatively, it can estimate the
+#' certain number of queries, the expected generalizability coefficient \eqn{E\rho^2} and index of
+#' dependability \eqn{\Phi}, possibly with confidence intervals. Alternatively, it can estimate the
 #' number of queries needed to achieve a certain level of stability, also with confidence intervals.
 #'
 #' @param gdata The result of running a \code{\link{gstudy}} with existing data.
@@ -13,10 +13,32 @@
 #'   sizes. This is the probability on each side of the interval, so for a 90\% confidence interval
 #'   one must set \code{alpha} to 0.05.
 #'
-#' @return An object of class \code{\link{dstudy}}.
+#' @return An object of class \code{\link{dstudy}}, with the following components:
+#' \tabular{ll}{
+#' \code{Erho2}, \code{Erho2.lwr}, \code{Erho2.upr} \tab Expected generalizability coefficient, and
+#'   lower and upper limits of the intervals around it. \cr
+#' \code{Phi}, \code{Phi.lwr}, \code{Phi.upr} \tab Expected index of dependability, and lower and
+#'   upper limits of the intervals around it. \cr
+#' \code{n.q_Erho2}, \code{n.q_Erho2.lwr}, \code{n.q_Erho2.upr} \tab Expected number of queries to
+#'   achieve the generalizability coefficient, and lower and upper limits of the intervals around
+#'   it. \cr
+#' \code{n.q_Phi}, \code{n.q_Phi.lwr}, \code{n.q_Phi.upr} \tab Expected number of queries to achieve
+#'   the index of dependability, and lower and upper limits of the intervals around it. \cr
+#' \code{call} \tab A list with the \code{\link{gstudy}} used in this D-study, the target number of
+#'   \code{queries}, target level of \code{stability} and \code{alpha} level for the confidence
+#'   intervals. \cr
+#' }
+#'
 #' @seealso \code{\link{gstudy}}
 #' @author Julián Urbano
 #' @references R.L. Brennan (2001). Generalizability Theory. Springer.
+#'
+#'   L.S. Feldt (1965). The Approximate Sampling Distribution of Kuder-Richardson Reliability
+#'   Coefficient Twenty. Psychometrika, 30(3):357–370.
+#'
+#'   C. Arteaga, S. Jeyaratnam, and G. A. Franklin (1982). Confidence Intervals for Proportions of
+#'   Total Variance in the Two-Way Cross Component of Variance Model. Communications in Statistics:
+#'   Theory and Methods, 11(15):1643–1658.
 #'
 #'   J. Urbano, M. Marrero and D. Martín (2013). On the Measurement of Test Collection Reliability.
 #'   ACM SIGIR, pp. 393-402.

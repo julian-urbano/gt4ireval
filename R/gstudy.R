@@ -9,7 +9,17 @@
 #' @param drop The fraction of worst-performing systems to drop from the data before analysis.
 #'   Defaults to 0 (include all systems).
 #'
-#' @return An object of class \code{\link{gstudy}}.
+#' @return An object of class \code{gstudy}, with the following components:
+#' \tabular{ll}{
+#' \code{n.s}, \code{n.q} \tab Number of systems and number of queries of the existing data. \cr
+#' \code{var.s}, \code{var.q}, \code{var.e} \tab Variance of the system, query, and residual
+#'   effects. \cr
+#' \code{em.s}, \code{em.q}, \code{em.e} \tab Mean squares of the system, query and residual
+#'   components. \cr
+#' \code{call} \tab A list with the existing \code{data} and the percentage of systems to
+#'   \code{drop}.\cr
+#' }
+#'
 #' @seealso \code{\link{dstudy}}
 #' @author Julián Urbano
 #' @references R.L. Brennan (2001). Generalizability Theory. Springer.
