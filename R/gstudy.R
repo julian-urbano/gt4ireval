@@ -1,6 +1,28 @@
-## Copyright (C) 2013-2017  Julián Urbano <urbano.julian@gmail.com>
-## Distributed under the terms of the MIT License.
-
+#' G-study (Generalizability)
+#'
+#' \code{gstudy} runs a G-study with the given data, assuming a fully crossed design (all systems
+#' evaluated on the same queries). It can be used to estimate variance components, which can further
+#' be used to run a D-study with \code{\link{dstudy}}.
+#'
+#' @param data A data frame or matrix with the existing effectiveness scores. Systems are columns
+#'   and queries are rows.
+#' @param drop The fraction of worst-performing systems to drop from the data before analysis.
+#'   Defaults to 0 (include all systems).
+#'
+#' @return An object of class \code{\link{gstudy}}.
+#' @seealso \code{\link{dstudy}}
+#' @author Julián Urbano
+#' @references R.L. Brennan (2001). Generalizability Theory. Springer.
+#'
+#'   J. Urbano, M. Marrero and D. Martín (2013). On the Measurement of Test Collection Reliability.
+#'   ACM SIGIR, pp. 393-402.
+#'
+#' @examples
+#' g <- gstudy(synthetic4)
+#'
+#' # same, but drop the 20% worst systems
+#' g20 <- gstudy(synthetic, drop = 0.2)
+#' @export
 gstudy <- function(data, drop = 0) {
   if(drop < 0 || drop >= 1)
     stop("Fraction of worst systems to drop must be in [0,1)")
@@ -52,6 +74,7 @@ gstudy <- function(data, drop = 0) {
   return(res)
 }
 
+#' @export
 print.gstudy <- function(x, ...) {
   cat("\nSummary of G-Study\n")
   cat("\n                 Systems     Queries Interaction\n")

@@ -1,6 +1,39 @@
-## Copyright (C) 2013-2017  Julián Urbano <urbano.julian@gmail.com>
-## Distributed under the terms of the MIT License.
-
+#' D-study (Decision)
+#'
+#' \code{dstudy} runs a D-study from the results of a \code{\link{gstudy}} and computes, for a
+#' certain number of queries, the expected generalizability coefficient (Erho2) and index of
+#' dependability (Phi), possibly with confidence intervals. Alternatively, it can estimate the
+#' number of queries needed to achieve a certain level of stability, also with confidence intervals.
+#'
+#' @param gdata The result of running a \code{\link{gstudy}} with existing data.
+#' @param queries A vector with different query set sizes for which to estimate Erho2 and Phi.
+#'   Defaults to the number of queries used to compute \code{gdata}.
+#' @param stability A vector with target Erho2 and Phi values to estimate required query set sizes.
+#' @param alpha A vector of confidence levels to compute intervals for Erho2, Phi and query set
+#'   sizes. This is the probability on each side of the interval, so for a 90\% confidence interval
+#'   one must set \code{alpha} to 0.05.
+#'
+#' @return An object of class \code{\link{dstudy}}.
+#' @seealso \code{\link{gstudy}}
+#' @author Julián Urbano
+#' @references R.L. Brennan (2001). Generalizability Theory. Springer.
+#'
+#'   J. Urbano, M. Marrero and D. Martín (2013). On the Measurement of Test Collection Reliability.
+#'   ACM SIGIR, pp. 393-402.
+#'
+#' @examples
+#' g <- gstudy(synthetic4)
+#' dstudy(g)
+#'
+#' # estimate stability at various query set sizes
+#' dstudy(g, queries = seq(50, 200, 10))
+#' # estimate required query set sizes for various stability levels
+#' dstudy(g, stability = seq(0.8, 0.95, 0.01))
+#' # compute both 95% and 99% confidence intervals
+#' dstudy(g, stability = 0.9, alpha = c(0.05, 0.01) / 2)
+#' # compute 1-tailed 95% confidence intervals
+#' dstudy(g, alpha = 0.05)
+#' @export
 dstudy <- function(gdata, queries = gdata$n.q, stability = 0.95, alpha = 0.025) {
   if(!inherits(gdata, "gstudy"))
     stop("gdata is not a valid g-study object.")
@@ -70,6 +103,7 @@ dstudy <- function(gdata, queries = gdata$n.q, stability = 0.95, alpha = 0.025) 
   return(res)
 }
 
+#' @export
 print.dstudy <- function(x, ...) {
   cat("\nSummary of D-Study\n")
   cat("\nCall:\n")
