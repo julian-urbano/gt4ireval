@@ -28,11 +28,12 @@
 #'   ACM SIGIR, pp. 393-402.
 #'
 #' @examples
-#' g <- gstudy(synthetic4)
+#' g <- gstudy(adhoc3)
 #'
 #' # same, but drop the 20% worst systems
-#' g20 <- gstudy(synthetic4, drop = 0.2)
+#' g20 <- gstudy(adhoc3, drop = 0.2)
 #' @export
+#' @importFrom stats quantile
 gstudy <- function(data, drop = 0) {
   if(drop < 0 || drop >= 1)
     stop("Fraction of worst systems to drop must be in [0,1)")

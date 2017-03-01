@@ -31,10 +31,10 @@ evaluated on the same queries). It can be used to estimate variance components, 
 be used to run a D-study with \code{\link{dstudy}}.
 }
 \examples{
-g <- gstudy(synthetic4)
+g <- gstudy(adhoc3)
 
 # same, but drop the 20\% worst systems
-g20 <- gstudy(synthetic4, drop = 0.2)
+g20 <- gstudy(adhoc3, drop = 0.2)
 }
 \references{
 R.L. Brennan (2001). Generalizability Theory. Springer.

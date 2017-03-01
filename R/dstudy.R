@@ -44,7 +44,7 @@
 #'   ACM SIGIR, pp. 393-402.
 #'
 #' @examples
-#' g <- gstudy(synthetic4)
+#' g <- gstudy(adhoc3)
 #' dstudy(g)
 #'
 #' # estimate stability at various query set sizes
@@ -56,6 +56,7 @@
 #' # compute 1-tailed 95% confidence intervals
 #' dstudy(g, alpha = 0.05)
 #' @export
+#' @importFrom stats qf
 dstudy <- function(gdata, queries = gdata$n.q, stability = 0.95, alpha = 0.025) {
   if(!inherits(gdata, "gstudy"))
     stop("gdata is not a valid g-study object.")

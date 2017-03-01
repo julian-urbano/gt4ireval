@@ -42,7 +42,7 @@ dependability \eqn{\Phi}, possibly with confidence intervals. Alternatively, it 
 number of queries needed to achieve a certain level of stability, also with confidence intervals.
 }
 \examples{
-g <- gstudy(synthetic4)
+g <- gstudy(adhoc3)
 dstudy(g)
 
 # estimate stability at various query set sizes
