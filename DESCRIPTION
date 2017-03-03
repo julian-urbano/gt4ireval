@@ -1,6 +1,6 @@
 Package: gt4ireval
 Title: Generalizability Theory for Information Retrieval Evaluation
-Version: 1.1
+Version: 2.0
 Authors@R: person("Julián", "Urbano", email = "urbano.julian@gmail.com", role = "cre")
 Description: Provides tools to measure the reliability of an Information Retrieval test collection.
   It allows users to estimate reliability using Generalizability Theory and map those estimates onto
