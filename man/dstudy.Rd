@@ -37,8 +37,8 @@ An object of class \code{\link{dstudy}}, with the following components:
 }
 \description{
 \code{dstudy} runs a D-study from the results of a \code{\link{gstudy}} and computes, for a
-certain number of queries, the expected generalizability coefficient \eqn{E\rho^2} and index of
-dependability \eqn{\Phi}, possibly with confidence intervals. Alternatively, it can estimate the
+certain number of queries, the expected generalizability coefficient \code{Erho2} and index of
+dependability \code{Phi}, possibly with confidence intervals. Alternatively, it can estimate the
 number of queries needed to achieve a certain level of stability, also with confidence intervals.
 }
 \examples{
@@ -68,7 +68,7 @@ R.L. Brennan (2001). Generalizability Theory. Springer.
   ACM SIGIR, pp. 393-402.
 }
 \seealso{
-\code{\link{gstudy}}
+\code{\link{gstudy}}, \code{\link{gt2tau}}
 }
 \author{
 Julián Urbano

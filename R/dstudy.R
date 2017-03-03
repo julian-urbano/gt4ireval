@@ -1,8 +1,8 @@
 #' D-study (Decision)
 #'
 #' \code{dstudy} runs a D-study from the results of a \code{\link{gstudy}} and computes, for a
-#' certain number of queries, the expected generalizability coefficient \eqn{E\rho^2} and index of
-#' dependability \eqn{\Phi}, possibly with confidence intervals. Alternatively, it can estimate the
+#' certain number of queries, the expected generalizability coefficient \code{Erho2} and index of
+#' dependability \code{Phi}, possibly with confidence intervals. Alternatively, it can estimate the
 #' number of queries needed to achieve a certain level of stability, also with confidence intervals.
 #'
 #' @param gdata The result of running a \code{\link{gstudy}} with existing data.
@@ -29,7 +29,7 @@
 #'   intervals. \cr
 #' }
 #'
-#' @seealso \code{\link{gstudy}}
+#' @seealso \code{\link{gstudy}}, \code{\link{gt2tau}}
 #' @author Julián Urbano
 #' @references R.L. Brennan (2001). Generalizability Theory. Springer.
 #'
