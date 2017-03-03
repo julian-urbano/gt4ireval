@@ -110,34 +110,34 @@ grid()
 
 ## Mapping G-Theory onto Data-based Indicators
 
-Finally, function `gt2data` can be used to map stability indicators from Generalizability Theory onto well-known indicators such as Kendall $\tau$ correlation or sensitivity (see [@Urbano2013] for details).
+Finally, the following functions can be used to map stability indicators from Generalizability Theory onto well-known data-based indicators (see [@Urbano2013] for details):
+
+* `gt2tau` and `gt2tauAP` map $\text{E}\rho^2$ onto Kendall $\tau$ correlation and $AP$ correlation coefficients.
+* `gt2power`, `gt2minor` and `gt2major` map $\text{E}\rho^2$ onto expected power, minor conflict rate and major conflict rate of 2-tailed t-tests.
+* `gt2asens` and `gt2rsens` map $\text{E}\rho^2$ and $\Phi$ onto absolute and relative sensitivity, respectively.
+* `gt2rmse` maps $\Phi$ onto rooted mean squared error.
 
 ```{r}
-gt2data(Erho2 = 0.95, Phi = 0.8)
+gt2tau(Erho2 = 0.95)
+gt2rsens(Phi = 0.8)
 ```
 
-The summary above shows that the estimated rank correlation at $\text{E}\rho^2=0.95$ is $\hat\tau=0.86412$, and that the relative sensitivity at $\Phi=0.8$ is estimated as $\hat\delta_r=12.389\%$.
+The results show that the estimated rank correlation at $\text{E}\rho^2=0.95$ is $\hat\tau=0.86412$, and that the relative sensitivity at $\Phi=0.8$ is estimated as $\hat\delta_r=12.389\%$.
 In order to map the stability of a certain D-study, we can simply use the returned `dstudy` object.
-
-```{r}
-adhoc3.d <- dstudy(adhoc3.g, queries = seq(10, 100, 10))
-gt2data(Erho2 = adhoc3.d$Erho2, Phi = adhoc3.d$Phi)
-```
-
-Similarly, we can use the returned `gt2data` object in subsequent computations. For instance, we can plot the estimated $\hat\tau$ correlation as a function of the query set size.
+These functions can be used for instance to plot the estimated $\hat\tau$ correlation as a function of the query set size.
 
 ```{r}
 xx <- seq(10, 200, 5)
 adhoc3.d <- dstudy(adhoc3.g, queries = xx)
-adhoc3.i <- gt2data(Erho2 = adhoc3.d$Erho2)
-names(adhoc3.i)
-plot(xx, adhoc3.i$tau,
+plot(xx, gt2tau(adhoc3.d$Erho2),
      yaxs = "i", ylim = c(0.5, 1), lwd = 2, type = "l",
      xlab = "Number of queries", ylab = "Kendall rank correlation")
-lines(xx, gt2data(Erho2 = adhoc3.d$Erho2.lwr)$tau) # lower confidence limit
-lines(xx, gt2data(Erho2 = adhoc3.d$Erho2.upr)$tau) # upper confidence limit
+lines(xx, gt2tau(adhoc3.d$Erho2.lwr)) # lower confidence limit
+lines(xx, gt2tau(adhoc3.d$Erho2.upr)) # upper confidence limit
 grid()
 ```
+
+In any case, the user is strongly advised to take these mappings with a grain of salt (see Fig. 3 in [@Urbano2013]).
 
 ### Acknowledgements
 
