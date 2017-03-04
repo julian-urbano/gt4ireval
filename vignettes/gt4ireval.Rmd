@@ -1,10 +1,10 @@
 ---
-title: "gt4ireval: An R package to Measure the Reliability of an Information Retrieval Test Collection with Generalizability Theory"
+title: "gt4ireval: Generalizability Theory for Information Retrieval Evaluation"
 author: "Julián Urbano"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{gt4ireval}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 bibliography: gt4ireval.bib
