@@ -1,4 +1,6 @@
-GT4IREval
+[![Travis-CI Build Status](https://travis-ci.org/julian-urbano/gt4ireval.svg?branch=master)](https://travis-ci.org/julian-urbano/gt4ireval)
+
+gt4ireval
 =========
 
 An R package to measure the reliability of an Information Retrieval test collection with Generalizability Theory.
