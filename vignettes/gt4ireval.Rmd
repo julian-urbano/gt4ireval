@@ -1,0 +1,150 @@
+---
+title: "gt4ireval: Generalizability Theory for Information Retrieval Evaluation"
+author: "Julián Urbano"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{gt4ireval}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: gt4ireval.bib
+---
+
+```{r, include = FALSE}
+library(gt4ireval)
+knitr::opts_chunk$set(fig.dpi = 96, fig.width = 5, fig.asp = 1 / 1.4)
+```
+
+`gt4ireval` is a package to measure the reliability of an Information Retrieval test collection. It allows users to estimate reliability using Generalizability Theory [@Brennan2001] and map those estimates onto well-known indicators such as Kendall $\tau$ correlation or sensitivity. For background information and details, the reader is referred to [@Urbano2013].
+
+## Loading Data
+
+Once loaded, `gt4ireval` needs initial evaluation data to run a G-study and the corresponding D-study. These data need to be in a standard data frame or matrix, where columns correspond to systems and rows correspond to queries [^1]. For this vignette, let us use data from the [TREC-3 Ad hoc track](http://trec.nist.gov).
+
+```{r}
+dim(adhoc3)
+adhoc3[1:5, 1:5]
+```
+
+If your data is transposed (i.e. columns correspond to queries and rows correspond to systems), you can get the correct format with the `t` function: `data <- t(data)`.
+
+## G-Study
+
+To run a G-study with the initial data we have, we simply call function `g.study`.
+
+```{r}
+gstudy(adhoc3)
+```
+
+Additionally, we can tell the function to ignore the systems with lowest average effectiveness scores by setting parameter `drop`. For instance, we can ignore the bottom 25\% of systems.
+
+```{r}
+adhoc3.g <- gstudy(adhoc3, drop = .25)
+adhoc3.g
+```
+
+The summary shows the estimated variance components: variance due to the system effect $\hat\sigma_s^2=0.0028$, due to the query effect $\hat\sigma_q^2=0.0281$, and due to the system-query interaction effect $\hat\sigma_e^2=0.0102$.
+The second row shows the same values but as a fraction of the total variance. The third row shows the estimated Mean Squares for each component, and finally the sample size in each case. In our example, we have 30 systems and 50 queries as initial data.
+
+## D-Study
+
+The results from the G-study above can now be used to run a D-study. First, let us estimate the stability of the current collection (50 queries).
+
+```{r}
+dstudy(adhoc3.g)
+```
+
+The summary first shows how `dstudy` was called. In particular, it tells us that the target number of queries is $n_q'=50$ (set by default from the G-study initial data), the target stability is $\pi=0.95$ (set by default), and the confidence level is $\alpha=0.025$ (set by default).
+Next are the estimated stability scores; the relative stability with 50 queries is $\text{E}\hat\rho^2=0.93265$ with a 95\% confidence interval of $[0.89311, 0.96287]$, and the absolute stability is $\hat\Phi=0.78613$ with a 95\% confidence interval of $[0.66141, 0.88039]$.
+Regarding the required number of queries to reach the target stability, the estimate is $\hat{n}_q'=69$ with a 95\% confidence interval of $[37, 114]$ to reach $\text{E}\rho^2=\pi$, and $\hat{n}_q'=259$ with a 95\% confidence interval of $[130, 487]$ to reach $\Phi=\pi$.
+
+Function `dstudy` can be called with multiple values for $n_q'$, $\pi$ and $\alpha$ to study trends. For instance, we can indicate several query set sizes by setting parameter `queries`.
+
+```{r}
+dstudy(adhoc3.g, queries = seq(20, 200, 20))
+```
+
+The output above shows the estimated stability scores, with confidence intervals, for various query set sizes. For example, we have $\text{E}\hat\rho^2=0.96515$ with 100 queries, and $\hat\Phi\in[0.88654, 0.96715]$ with 95\% confidence when having 200 queries.
+Similarly, we may indicate several target stability scores by setting parameter `stability`.
+
+```{r}
+dstudy(adhoc3.g, stability = c(0.8, 0.85, 0.9, 0.95, 0.97, 0.99))
+```
+The output above shows that the estimated number of queries to reach $\text{E}\rho^2=0.97$ is 117, while 123 are required to reach $\Phi=0.9$.
+Finally, we can also indicate several confidence levels for the computation of confidence intervals by setting parameter `alpha` [^2].
+
+```{r}
+dstudy(adhoc3.g, alpha = c(0.005, 0.025, 0.05))
+```
+
+The summary above shows that with 50 queries a 99\% confidence interval for $\text{E}\rho^2$ is $[0.87737, 0.96967]$, and a 90\% confidence interval on the number of queries to reach $\Phi=0.95$ is $[145, 439]$.
+
+## Using the Returned Objects
+
+Both `gstudy` and `dstudy` return objects with all results from the analysis so they can be used in subsequent computations. In fact, object `adhoc3.g` above contains all the G-study results, and it is provided to function `d.study`.
+The full list of available data in both objects can be obtained with function `names`.
+
+```{r}
+adhoc3.g <- gstudy(adhoc3, drop = 0.25)
+names(adhoc3.g)
+adhoc3.g$var.s
+
+adhoc3.d <- dstudy(adhoc3.g, queries = seq(10, 100, 10), stability = seq(0.5, 0.99, .05))
+names(adhoc3.d)
+adhoc3.d$Erho2
+cbind(lwr = adhoc3.d$n.q_Phi.lwr, upr = adhoc3.d$n.q_Phi.upr)
+```
+
+With all these data we can for instance plot the estimated $\text{E}\hat\rho^2$ score, with a 95\% confidence interval, as a function of the number of queries in the collection.
+
+```{r}
+xx <- seq(10, 200, 5)
+adhoc3.d <- dstudy(adhoc3.g, queries = xx)
+plot(xx, adhoc3.d$Erho2,
+     yaxs = "i", ylim = c(0.75, 1), lwd = 2, type = "l",
+     xlab = "Number of queries", ylab = "Relative stability")
+lines(xx, adhoc3.d$Erho2.lwr) # lower confidence limit
+lines(xx, adhoc3.d$Erho2.upr) # upper confidence limit
+grid()
+```
+
+## Mapping G-Theory onto Data-based Indicators
+
+Finally, the following functions can be used to map stability indicators from Generalizability Theory onto well-known data-based indicators (see [@Urbano2013] for details):
+
+* `gt2tau` and `gt2tauAP` map $\text{E}\rho^2$ onto Kendall $\tau$ correlation and $AP$ correlation coefficients.
+* `gt2power`, `gt2minor` and `gt2major` map $\text{E}\rho^2$ onto expected power, minor conflict rate and major conflict rate of 2-tailed t-tests.
+* `gt2asens` and `gt2rsens` map $\text{E}\rho^2$ and $\Phi$ onto absolute and relative sensitivity, respectively.
+* `gt2rmse` maps $\Phi$ onto rooted mean squared error.
+
+```{r}
+gt2tau(Erho2 = 0.95)
+gt2rsens(Phi = 0.8)
+```
+
+The results show that the estimated rank correlation at $\text{E}\rho^2=0.95$ is $\hat\tau=0.86412$, and that the relative sensitivity at $\Phi=0.8$ is estimated as $\hat\delta_r=12.389\%$.
+In order to map the stability of a certain D-study, we can simply use the returned `dstudy` object.
+These functions can be used for instance to plot the estimated $\hat\tau$ correlation as a function of the query set size.
+
+```{r}
+xx <- seq(10, 200, 5)
+adhoc3.d <- dstudy(adhoc3.g, queries = xx)
+plot(xx, gt2tau(adhoc3.d$Erho2),
+     yaxs = "i", ylim = c(0.5, 1), lwd = 2, type = "l",
+     xlab = "Number of queries", ylab = "Kendall rank correlation")
+lines(xx, gt2tau(adhoc3.d$Erho2.lwr)) # lower confidence limit
+lines(xx, gt2tau(adhoc3.d$Erho2.upr)) # upper confidence limit
+grid()
+```
+
+In any case, the user is strongly advised to take these mappings with a grain of salt (see Fig. 3 in [@Urbano2013]).
+
+### Acknowledgements
+
+This work was supported by an A4U postdoctoral grant and a Juan de la Cierva postdoctoral fellowship.
+
+## References
+
+[^1]: For general information on how to read data in `R`, the reader is referred to the [R Data Import/Export manual](https://cran.r-project.org/manuals.html).
+
+[^2]: Recall that $100(1-2\alpha)\%$ intervals are computed, so for an 80\% confidence interval we set $\alpha=0.1$.

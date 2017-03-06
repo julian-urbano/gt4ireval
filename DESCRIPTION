@@ -1,0 +1,18 @@
+Package: gt4ireval
+Title: Generalizability Theory for Information Retrieval Evaluation
+Version: 2.0
+Authors@R: person("Julián", "Urbano", email = "urbano.julian@gmail.com", role = c("aut", "cre"))
+Description: Provides tools to measure the reliability of an Information Retrieval test collection.
+  It allows users to estimate reliability using Generalizability Theory and map those estimates onto
+  well-known indicators such as Kendall tau correlation or sensitivity.
+Depends: R (>= 3.2)
+License: MIT + file LICENSE
+BugReports: https://github.com/julian-urbano/gt4ireval/issues
+URL: https://github.com/julian-urbano/gt4ireval/
+Encoding: UTF-8
+LazyData: true
+Suggests: testthat,
+    knitr,
+    rmarkdown
+RoxygenNote: 6.0.1
+VignetteBuilder: knitr
