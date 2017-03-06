@@ -145,6 +145,6 @@ This work was supported by an A4U postdoctoral grant and a Juan de la Cierva pos
 
 ## References
 
-[^1]: For general information on how to read data in `R`, the reader is referred to the [R Data Import/Export manual](http://cran.r-project.org/manuals.html).
+[^1]: For general information on how to read data in `R`, the reader is referred to the [R Data Import/Export manual](https://cran.r-project.org/manuals.html).
 
 [^2]: Recall that $100(1-2\alpha)\%$ intervals are computed, so for an 80\% confidence interval we set $\alpha=0.1$.
