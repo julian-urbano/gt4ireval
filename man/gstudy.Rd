@@ -4,26 +4,25 @@
 \alias{gstudy}
 \title{G-study (Generalizability)}
 \usage{
-gstudy(data, drop = 0)
+gstudy(data, ensurePositive = TRUE, drop = 0)
 }
 \arguments{
 \item{data}{A data frame or matrix with the existing effectiveness scores. Systems are columns
 and queries are rows.}
 
+\item{ensurePositive}{Whether to set negative variance estimates to zero or not. Defaults to
+\code{FALSE}.}
+
 \item{drop}{The fraction of worst-performing systems to drop from the data before analysis.
 Defaults to 0 (include all systems).}
 }
 \value{
-An object of class \code{gstudy}, with the following components:
-\tabular{ll}{
-\code{n.s}, \code{n.q} \tab Number of systems and number of queries of the existing data. \cr
-\code{var.s}, \code{var.q}, \code{var.e} \tab Variance of the system, query, and residual
-  effects. \cr
-\code{em.s}, \code{em.q}, \code{em.e} \tab Mean squares of the system, query and residual
-  components. \cr
-\code{call} \tab A list with the existing \code{data} and the percentage of systems to
-  \code{drop}.\cr
-}
+An object of class \code{gstudy}, with the following components: \tabular{ll}{
+  \code{n.s}, \code{n.q} \tab Number of systems and number of queries of the existing data. \cr
+  \code{var.s}, \code{var.q}, \code{var.e} \tab Variance of the system, query, and residual
+  effects. \cr \code{em.s}, \code{em.q}, \code{em.e} \tab Mean squares of the system, query and
+  residual components. \cr \code{call} \tab A list with the existing \code{data} and the
+  percentage of systems to \code{drop}.\cr }
 }
 \description{
 \code{gstudy} runs a G-study with the given data, assuming a fully crossed design (all systems

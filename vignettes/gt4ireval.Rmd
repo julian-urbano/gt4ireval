@@ -46,6 +46,13 @@ adhoc3.g
 The summary shows the estimated variance components: variance due to the system effect $\hat\sigma_s^2=0.0028$, due to the query effect $\hat\sigma_q^2=0.0281$, and due to the system-query interaction effect $\hat\sigma_e^2=0.0102$.
 The second row shows the same values but as a fraction of the total variance. The third row shows the estimated Mean Squares for each component, and finally the sample size in each case. In our example, we have 30 systems and 50 queries as initial data.
 
+A variance estimate can sometimes be negative. In these situations, it is common practice to set it to zero, but in some cases the negative estimate is used (see Section 3.4.6 in [@Brennan2001]). In these situations, `gstudy` will give a warning, and parameter `ensurePositive` can be used to decide whether to set negative estimates to zero or not:
+
+```{r}
+gstudy(synthetic4[4:7,4:7], ensurePositive = FALSE)
+gstudy(synthetic4[4:7,4:7], ensurePositive = TRUE)
+```
+
 ## D-Study
 
 The results from the G-study above can now be used to run a D-study. First, let us estimate the stability of the current collection (50 queries).
