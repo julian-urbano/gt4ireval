@@ -68,8 +68,8 @@ dstudy <- function(gdata, queries = gdata$n.q, stability = 0.95, alpha = 0.025) 
     stop("Number of queries must be one or more")
   if(any(stability <= 0 | stability >= 1))
     stop("Target stability must be in (0,1)")
-  if(any(alpha <= 0 | alpha >= 1))
-    stop("Significance level must be in (0,1)")
+  if(any(alpha <= 0 | alpha >= 0.5))
+    stop("Significance level must be in (0,0.5)")
 
   # Point estimates for the indicated n.q
   Erho2_ <- gdata$var.s / (gdata$var.s + gdata$var.e / queries)

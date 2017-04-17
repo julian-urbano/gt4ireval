@@ -24,5 +24,5 @@ test_that("Synthetic dataset, invalid args", {
   expect_error(dstudy(g, stability = c(.1, -.1)))
   expect_error(dstudy(g, stability = c(.9, 1)))
   expect_error(dstudy(g, alpha = c(-.01, .01)))
-  expect_error(dstudy(g, alpha = c(.01, 1.01)))
+  expect_error(dstudy(g, alpha = c(.01, .55)))
 })
