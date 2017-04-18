@@ -1,10 +1,14 @@
+* Confidence intervals in G-study (#5).
+* Significance levels must be in the range (0, 0.5) (#7).
+* Allow negative variance estimates (#6).
+
 ## gt4ireval 2.0, 06-Mar-2017
 
-+ Now as fully fledged R package in CRAN (#4).
-* Switched to MIT license (#3)
+* Now as fully fledged R package in CRAN (#4).
+* Switched to MIT license (#3).
 * Refactored function names and added error checking.
-+ Separated GT-data mapping into several functions.
-+ Added simple unit tests from Brennan's book (#2).
+* Separated GT-data mapping into several functions.
+* Added simple unit tests from Brennan's book (#2).
 * g.study accepts both data.frame and matrix (#1).
 
 ## gt4ireval 1.1, 08-May-2014
@@ -13,4 +17,4 @@
 
 ## gt4ireval 1.0, 09-Dec-2013
 
-+ Initial release.
+* Initial release.

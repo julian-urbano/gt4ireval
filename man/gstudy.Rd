@@ -4,7 +4,7 @@
 \alias{gstudy}
 \title{G-study (Generalizability)}
 \usage{
-gstudy(data, ensurePositive = TRUE, drop = 0)
+gstudy(data, ensurePositive = TRUE, alpha = 0.025, drop = 0)
 }
 \arguments{
 \item{data}{A data frame or matrix with the existing effectiveness scores. Systems are columns
@@ -12,6 +12,10 @@ and queries are rows.}
 
 \item{ensurePositive}{Whether to set negative variance estimates to zero or not. Defaults to
 \code{FALSE}.}
+
+\item{alpha}{A vector of confidence levels to compute intervals for the variance components. This
+is the probability on each side of the interval, so for a 90\% confidence interval one must set
+\code{alpha} to 0.05. Defaults to \code{NULL} (do not compute intervals).}
 
 \item{drop}{The fraction of worst-performing systems to drop from the data before analysis.
 Defaults to 0 (include all systems).}
@@ -26,17 +30,26 @@ An object of class \code{gstudy}, with the following components: \tabular{ll}{
 }
 \description{
 \code{gstudy} runs a G-study with the given data, assuming a fully crossed design (all systems
-evaluated on the same queries). It can be used to estimate variance components, which can further
-be used to run a D-study with \code{\link{dstudy}}.
+evaluated on the same queries). It can be used to estimate variance components, possibly with
+confidence intervals, which can further be used to run a D-study with \code{\link{dstudy}}.
+Confidence intervals are computed with the Jacknife procedure described in sections 6.1.2 and
+6.2.4 of Brennan (2001).
 }
 \examples{
 g <- gstudy(adhoc3)
 
 # same, but drop the 20\% worst systems
 g20 <- gstudy(adhoc3, drop = 0.2)
+
+# compute confidence intervals
+g <- gstudy(adhoc3, alpha = c(.05, 0.025))
 }
 \references{
 R.L. Brennan (2001). Generalizability Theory. Springer.
+
+  L.J. Cronbach, G.C. Gleser, H. Nanda and N. Rajaratnam (1972). The dependability of behavioral
+  measurements: Theory of generalizability for scores and profiles. Wiley. (pp. 54-57, 66,
+  70-72).
 
   J. Urbano, M. Marrero and D. Martín (2013). On the Measurement of Test Collection Reliability.
   ACM SIGIR, pp. 393-402.

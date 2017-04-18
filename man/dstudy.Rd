@@ -19,27 +19,25 @@ sizes. This is the probability on each side of the interval, so for a 90\% confi
 one must set \code{alpha} to 0.05.}
 }
 \value{
-An object of class \code{\link{dstudy}}, with the following components:
-\tabular{ll}{
-\code{Erho2}, \code{Erho2.lwr}, \code{Erho2.upr} \tab Expected generalizability coefficient, and
-  lower and upper limits of the intervals around it. \cr
-\code{Phi}, \code{Phi.lwr}, \code{Phi.upr} \tab Expected index of dependability, and lower and
-  upper limits of the intervals around it. \cr
-\code{n.q_Erho2}, \code{n.q_Erho2.lwr}, \code{n.q_Erho2.upr} \tab Expected number of queries to
-  achieve the generalizability coefficient, and lower and upper limits of the intervals around
-  it. \cr
-\code{n.q_Phi}, \code{n.q_Phi.lwr}, \code{n.q_Phi.upr} \tab Expected number of queries to achieve
-  the index of dependability, and lower and upper limits of the intervals around it. \cr
-\code{call} \tab A list with the \code{\link{gstudy}} used in this D-study, the target number of
-  \code{queries}, target level of \code{stability} and \code{alpha} level for the confidence
-  intervals. \cr
-}
+An object of class \code{\link{dstudy}}, with the following components: \tabular{ll}{
+  \code{Erho2}, \code{Erho2.lwr}, \code{Erho2.upr} \tab Expected generalizability coefficient,
+  and lower and upper limits of the intervals around it. \cr \code{Phi}, \code{Phi.lwr},
+  \code{Phi.upr} \tab Expected index of dependability, and lower and upper limits of the
+  intervals around it. \cr \code{n.q_Erho2}, \code{n.q_Erho2.lwr}, \code{n.q_Erho2.upr} \tab
+  Expected number of queries to achieve the generalizability coefficient, and lower and upper
+  limits of the intervals around it. \cr \code{n.q_Phi}, \code{n.q_Phi.lwr}, \code{n.q_Phi.upr}
+  \tab Expected number of queries to achieve the index of dependability, and lower and upper
+  limits of the intervals around it. \cr \code{call} \tab A list with the \code{\link{gstudy}}
+  used in this D-study, the target number of \code{queries}, target level of \code{stability} and
+  \code{alpha} level for the confidence intervals. \cr }
 }
 \description{
 \code{dstudy} runs a D-study from the results of a \code{\link{gstudy}} and computes, for a
 certain number of queries, the expected generalizability coefficient \code{Erho2} and index of
 dependability \code{Phi}, possibly with confidence intervals. Alternatively, it can estimate the
 number of queries needed to achieve a certain level of stability, also with confidence intervals.
+Confidence intervals are computed with the Feldt and Arteaga et al. procedures described in
+sections 6.3.2 and 6.3.3 of Brennan (2001).
 }
 \examples{
 g <- gstudy(adhoc3)
